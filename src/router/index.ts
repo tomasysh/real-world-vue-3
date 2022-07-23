@@ -7,6 +7,7 @@ import EventEdit from '@/views/Event/Edit.vue';
 import NotFound from '@/views/NotFound.vue';
 import NetworkError from '@/views/NetworkError.vue';
 import EventService from '@/services/EventService';
+import NProgress from 'nprogress';
 import GStore from '@//store';
 
 const routes: Array<RouteRecordRaw> = [
@@ -53,7 +54,8 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'edit',
         name: 'EventEdit',
-        component: EventEdit
+        component: EventEdit,
+        meta: { requireAuth: true }
       }
     ]
   },
@@ -92,6 +94,36 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+  scrollBehavior(to, form, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { top: 0 };
+    }
+  }
+});
+
+router.beforeEach((to: any, from: any) => {
+  NProgress.start()
+
+  const notAuthorized = true
+  if (to.meta.requireAuth && notAuthorized) {
+    GStore.flashMessage = 'Sorry, you are not authorized to view this page'
+
+    setTimeout(() => {
+      GStore.flashMessage = ''
+    }, 3000)
+
+    if (from.href) { // <--- If this navigation came from a previous page.
+      return false
+    } else {  // <--- Must be navigating directly
+      return { path: '/' }  // <--- Push navigation to the root route.
+    }
+  }
+})
+
+router.afterEach(() => {
+  NProgress.done()
 });
 
 export default router;
