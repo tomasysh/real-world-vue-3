@@ -29,7 +29,9 @@
 
 <script>
 // @ is an alias to /src
-import { watchEffect } from 'vue';
+// import { watchEffect } from 'vue';
+import NProgress from 'nprogress';
+
 import EventService from '@/services/EventService';
 import EventCard from '@/components/EventCard.vue';
 
@@ -51,20 +53,52 @@ export default {
       return this.page < totalPages;
     }
   },
-  created() {
-    watchEffect(() => {
-      this.events = null;
-      EventService.getEvents(2, this.page)
-        .then((response) => {
-          console.log('response', response);
+  beforeRouteEnter(routeTo, routeFrom, next) {
+    NProgress.start();
+    EventService.getEvents(2, parseInt(routeTo.query.page) || 1)
+      .then((response) => {
+        next((vm) => {
+          vm.events = response.data;
+          vm.totalEvents = response.headers['x-total-count']
+        });
+      })
+      .catch((error) => {
+        next({ name: 'NetworkError' })
+      })
+      .finally(() => {
+        NProgress.done();
+      });
+  },
+  beforeRouteUpdate(routeTo, routeFrom, next) {
+    NProgress.start();
+    EventService.getEvents(2, parseInt(routeTo.query.page) || 1)
+      .then((response) => {
+        next(() => {
           this.events = response.data;
           this.totalEvents = response.headers['x-total-count']
-        })
-        .catch((error) => {
-          this.$router.push({ name: 'NetworkError' })
         });
-    });
-  },
+      })
+      .catch((error) => {
+        next({ name: 'NetworkError' })
+      })
+      .finally(() => {
+        NProgress.done();
+      });
+  }
+  // created() {
+  //   watchEffect(() => {
+  //     this.events = null;
+  //     EventService.getEvents(2, this.page)
+  //       .then((response) => {
+  //         console.log('response', response);
+  //         this.events = response.data;
+  //         this.totalEvents = response.headers['x-total-count']
+  //       })
+  //       .catch((error) => {
+  //         this.$router.push({ name: 'NetworkError' })
+  //       });
+  //   });
+  // },
 }
 </script>
 
