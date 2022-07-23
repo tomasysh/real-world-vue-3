@@ -6,6 +6,8 @@ import EventRegister from '@/views/Event/Register.vue';
 import EventEdit from '@/views/Event/Edit.vue';
 import NotFound from '@/views/NotFound.vue';
 import NetworkError from '@/views/NetworkError.vue';
+import EventService from '@/services/EventService';
+import GStore from '@//store';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -21,6 +23,22 @@ const routes: Array<RouteRecordRaw> = [
     // props: (route) => ({ eventId: route.params.id }),
     props: true,
     component: EventLayout,
+    beforeEnter: (to) => {
+      return EventService.getEvent(to.params.id)
+        .then((response) => {
+          GStore.event = response.data;
+        })
+        .catch((error) => {
+          if (error.response && error.response.status == 404) {
+            return {
+              name: '404Resource',
+              params: { resource: 'event' }
+            };
+          } else {
+            return { name: 'NetworkError' };
+          }
+        })
+    },
     children: [
       {
         path: '',
