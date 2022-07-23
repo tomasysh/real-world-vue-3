@@ -13,7 +13,7 @@ const routes: Array<RouteRecordRaw> = [
     props: (route) => ({ page: (+route.query.page!) || 1})
   },
   {
-    path: '/event/:id',
+    path: '/events/:id',
     name: 'EventLayout',
     // NOTE: 可以使用 function 格式化 params, query 後回傳。
     // props: (route) => ({ eventId: route.params.id }),
@@ -38,13 +38,18 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
   {
-    path: '/about',
+    path: '/event/:afterEvent(.*)',
+    redirect: (to) => ({ path: `/events/${ to.params.afterEvent }` })
+  },
+  {
+    path: '/about-us',
     name: 'About',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: 'about' */ '../views/About.vue'),
+    alias: '/about'
   },
 ];
 
