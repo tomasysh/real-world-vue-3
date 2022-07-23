@@ -4,14 +4,17 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "@vue/runtime-core"
+
+export default defineComponent({
+  name: 'AppHeader',
   data() {
     return {
       loggedIn: false
     }
   }
-}
+})
 </script>
 
 <style scoped>

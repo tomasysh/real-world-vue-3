@@ -31,9 +31,11 @@
 // @ is an alias to /src
 // import { watchEffect } from 'vue';
 
-import EventCard from '@/components/EventCard.vue';
+import { defineComponent } from '@vue/runtime-core';
 
-export default {
+import EventCard from '../components/EventCard.vue';
+
+export default defineComponent({
   name: 'EventList',
   components: {
     EventCard
@@ -52,7 +54,7 @@ export default {
       return this.$store.state.events;
     }
   }
- }
+ })
 </script>
 
 <style scoped>
