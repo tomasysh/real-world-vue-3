@@ -10,6 +10,7 @@ import NetworkError from '@/views/NetworkError.vue';
 import EventService from '@/services/EventService';
 import NProgress from 'nprogress';
 import GStore from '@/reactive';
+import ErrorDisplay from '@/views/ErrorDisplay.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -94,6 +95,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/networkError',
     name:  'NetworkError',
     component: NetworkError
+  },
+  {
+    path: '/error/:error',
+    name: 'ErrorDisplay',
+    props: true,
+    component: ErrorDisplay
   }
 ];
 
