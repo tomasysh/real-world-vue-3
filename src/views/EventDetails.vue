@@ -10,14 +10,14 @@
 import EventService from '@/services/EventService.js';
 
 export default {
-  props: ['id'],
+  props: ['eventId'],
   data() {
     return {
       event: null
     }
   },
   created() {
-    EventService.getEvent(this.id)
+    EventService.getEvent(this.eventId)
       .then(response => {
         this.event = response.data
       })

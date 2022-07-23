@@ -7,11 +7,14 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'EventList',
     component: EventList,
+    props: (route) => ({ page: (+route.query.page!) || 1})
   },
   {
     path: '/event/:id',
     name: 'EventDetails',
-    props: true,
+    // NOTE: 可以使用 function 格式化 params, query 後回傳。
+    props: (route) => ({ eventId: route.params.id }),
+    // props: true,
     component: EventDetails
   },
   {
