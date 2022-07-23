@@ -32,7 +32,7 @@ export default createStore({
     fetchEvents({ commit }) {
       return EventService.getEvents()
         .then((response) => {
-          commit('SET_EVENTS', response.data)
+          commit('SET_EVENTS', response.data);
         })
         .catch((error) => {
           throw(error);

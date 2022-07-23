@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 
 export default {
   props: ['id'],
@@ -26,9 +27,10 @@ export default {
     });
   },
   computed: {
-    event() {
-      return this.$store.state.event;
-    }
+    // event() {
+    //   return this.$store.state.event;
+    // }
+    ...mapState(['event'])
   }
 }
 </script>
