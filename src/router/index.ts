@@ -3,12 +3,13 @@ import EventList from '@/views/EventList.vue';
 import EventLayout from '@/views/Event/Layout.vue';
 import EventDetails from '@/views/Event/Details.vue';
 import EventRegister from '@/views/Event/Register.vue';
+import EventCreate from '@/views/EventCreate.vue';
 import EventEdit from '@/views/Event/Edit.vue';
 import NotFound from '@/views/NotFound.vue';
 import NetworkError from '@/views/NetworkError.vue';
 import EventService from '@/services/EventService';
 import NProgress from 'nprogress';
-import GStore from '@//store';
+import GStore from '@/reactive';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -26,10 +27,10 @@ const routes: Array<RouteRecordRaw> = [
     component: EventLayout,
     beforeEnter: (to) => {
       return EventService.getEvent(to.params.id)
-        .then((response) => {
+        .then((response: any) => {
           GStore.event = response.data;
         })
-        .catch((error) => {
+        .catch((error: any) => {
           if (error.response && error.response.status == 404) {
             return {
               name: '404Resource',
@@ -58,6 +59,11 @@ const routes: Array<RouteRecordRaw> = [
         meta: { requireAuth: true }
       }
     ]
+  },
+  {
+    path: '/eventCreate',
+    name: 'EventCreate',
+    component: EventCreate
   },
   {
     path: '/event/:afterEvent(.*)',
