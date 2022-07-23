@@ -31,7 +31,6 @@
 // @ is an alias to /src
 // import { watchEffect } from 'vue';
 
-import EventService from '@/services/EventService';
 import EventCard from '@/components/EventCard.vue';
 
 export default {
@@ -39,58 +38,15 @@ export default {
   components: {
     EventCard
   },
-  props: ['page'],
-  data() {
-    return {
-      events: null,
-      totalEvents: 0
-    }
+  created() {
+    this.$store.dispatch('fetchEvents');
   },
   computed: {
-    hasNextPage() {
-      const totalPages = Math.ceil(this.totalEvents / 2);
-      return this.page < totalPages;
+    events() {
+      return this.$store.state.events;
     }
-  },
-  beforeRouteEnter(routeTo, routeFrom, next) {
-    EventService.getEvents(2, parseInt(routeTo.query.page) || 1)
-      .then((response) => {
-        next((vm) => {
-          vm.events = response.data;
-          vm.totalEvents = response.headers['x-total-count']
-        });
-      })
-      .catch((error) => {
-        next({ name: 'NetworkError' })
-      });
-  },
-  beforeRouteUpdate(routeTo, routeFrom, next) {
-    return EventService.getEvents(2, parseInt(routeTo.query.page) || 1)
-      .then((response) => {
-        next(() => {
-          this.events = response.data;
-          this.totalEvents = response.headers['x-total-count']
-        });
-      })
-      .catch((error) => {
-        next({ name: 'NetworkError' })
-      });
   }
-  // created() {
-  //   watchEffect(() => {
-  //     this.events = null;
-  //     EventService.getEvents(2, this.page)
-  //       .then((response) => {
-  //         console.log('response', response);
-  //         this.events = response.data;
-  //         this.totalEvents = response.headers['x-total-count']
-  //       })
-  //       .catch((error) => {
-  //         this.$router.push({ name: 'NetworkError' })
-  //       });
-  //   });
-  // },
-}
+ }
 </script>
 
 <style scoped>

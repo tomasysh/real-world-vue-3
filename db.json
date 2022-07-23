@@ -85,6 +85,16 @@
       "date": "1",
       "time": "1",
       "organizer": "Adam Jahr"
+    },
+    {
+      "id": "4b2b1956-7440-42b6-b388-88a599b96ac9",
+      "category": "housing",
+      "title": "3",
+      "description": "3",
+      "location": "3",
+      "date": "3",
+      "time": "3",
+      "organizer": "tomasysh"
     }
   ]
 }
