@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import EventList from '@/views/EventList.vue';
-import EventDetails from '@/views/EventDetails.vue';
+import EventLayout from '@/views/Event/Layout.vue';
+import EventDetails from '@/views/Event/Details.vue';
+import EventRegister from '@/views/Event/Register.vue';
+import EventEdit from '@/views/Event/Edit.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -11,11 +14,28 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/event/:id',
-    name: 'EventDetails',
+    name: 'EventLayout',
     // NOTE: 可以使用 function 格式化 params, query 後回傳。
-    props: (route) => ({ eventId: route.params.id }),
-    // props: true,
-    component: EventDetails
+    // props: (route) => ({ eventId: route.params.id }),
+    props: true,
+    component: EventLayout,
+    children: [
+      {
+        path: '',
+        name: 'EventDetails',
+        component: EventDetails
+      },
+      {
+        path: 'register',
+        name: 'EventRegister',
+        component: EventRegister
+      },
+      {
+        path: 'edit',
+        name: 'EventEdit',
+        component: EventEdit
+      }
+    ]
   },
   {
     path: '/about',
