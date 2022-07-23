@@ -5,6 +5,7 @@
 
 <script>
 import { getMessage } from '@/services/axios.js'
+
 export default {
   data() {
     return {
