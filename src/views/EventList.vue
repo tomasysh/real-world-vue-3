@@ -2,7 +2,7 @@
   <div>
     <h1>Events for Good</h1>
     <div class="events">
-      <EventCard v-for="event in events" :key="event.id" :event="event" />
+      <EventCard v-for="event in event.events" :key="event.id" :event="event" />
 
     <div class="pagination">
       <router-link
@@ -42,7 +42,7 @@ export default defineComponent({
     EventCard
   },
   created() {
-    this.$store.dispatch('fetchEvents', {
+    this.$store.dispatch('event/fetchEvents', {
       perPage: this.perPage,
       page: this.page
     })
@@ -61,10 +61,10 @@ export default defineComponent({
       return +this.$route.query.page || 1;
     },
     hasNextPage() {
-      const totalPages = Math.ceil(this.eventsTotal / this.perPage);
+      const totalPages = Math.ceil(this.event.eventsTotal / this.perPage);
       return this.page < totalPages;
     },
-    ...mapState(['events', 'eventsTotal'])
+    ...mapState(['event'])
   }
  })
 </script>

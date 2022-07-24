@@ -8,7 +8,7 @@
           |
           <router-link :to="{ name: 'EventEdit' }">Edit</router-link>
     </div>
-    <router-view :event="event" />
+    <router-view :event="event.event" />
   </div>
 </template>
 
@@ -18,7 +18,7 @@ import { mapState } from 'vuex';
 export default {
   props: ['id'],
   created() {
-    this.$store.dispatch('fetchEvent', this.id)
+    this.$store.dispatch('event/fetchEvent', this.id)
       .catch((error) => {
         this.$router.push({
           name: 'ErrorDisplay',

@@ -1,5 +1,5 @@
 <template>
-<h1>Create an event, {{ user.name }}</h1>
+<h1>Create an event, {{ user.user.name }}</h1>
 
 <div class="form-container">
 
@@ -77,13 +77,7 @@ export default {
     }
   },
   computed: {
-    // catLength() {
-    //   return this.$store.getters.categoriesLength;
-    // },
-    // getEvent() {
-    //   return this.$store.getters.getEventById;
-    // },
-    ...mapGetters(['categoriesLength', 'getEventById']),
+    ...mapGetters('event', ['categoriesLength', 'getEventById']),
     ...mapState(['user', 'categories'])
   },
   methods: {
@@ -96,11 +90,11 @@ export default {
         location: '',
         date: '',
         time: '',
-        organizer: this.$store.state.user.name
+        organizer: this.$store.state.user.user.name
       }
     },
     onSubmit() {
-      this.$store.dispatch('createEvent', this.event)
+      this.$store.dispatch('event/createEvent', this.event)
         .then(() => {
           this.$router.push({
             name: 'EventDetails',
@@ -115,55 +109,5 @@ export default {
       })
     }
   },
-
-  // setup() {
-  //   const categories = [
-  //       'sustainability',
-  //       'nature',
-  //       'animal welfare',
-  //       'housing',
-  //       'education',
-  //       'food',
-  //       'community'
-  //     ];
-    
-  //   const event = {
-  //       id         : '',
-  //       category   : '',
-  //       title      : '',
-  //       description: '',
-  //       location   : '',
-  //       date       : '',
-  //       time       : '',
-  //       organizer  : ''
-  //     };
-
-  //   function onSubmit() {
-  //     const event = {
-  //       ...this.event,
-  //       id: uuidv4(),
-  //       organizer: this.$store.state.user.name
-  //     };
-  //     this.$store.dispatch('createEvent', event)
-  //       .then(() => {
-  //         this.$router.push({
-  //           name: 'EventDetails',
-  //           params: { id: event.id }
-  //         })
-  //       .catch((error) => {
-  //         this.$router.push({
-  //           name: 'ErrorDisplay',
-  //           params: { error: error }
-  //         });
-  //       })
-  //     })
-  //   }
-
-  //   return {
-  //     categories,
-  //     event,
-  //     onSubmit
-  //   }
-  // }
 }
 </script>

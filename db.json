@@ -105,6 +105,26 @@
       "date": "",
       "time": "",
       "organizer": "tomasysh"
+    },
+    {
+      "id": "361bb832-c892-4365-a6a1-0dfa34366251",
+      "category": "animal welfare",
+      "title": "rwsssss",
+      "description": "",
+      "location": "",
+      "date": "",
+      "time": "",
+      "organizer": "tomasysh"
+    },
+    {
+      "id": "bfc52fd0-6a69-4a27-b3d7-b7145ead22f9",
+      "category": "education",
+      "title": "this.event.id",
+      "description": "",
+      "location": "",
+      "date": "",
+      "time": "",
+      "organizer": "tomasysh"
     }
   ]
 }
