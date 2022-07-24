@@ -4,18 +4,35 @@
         <span>Event #{{ $route.params.id }}</span>
         <span>@{{ event.time }} on {{ event.date }}</span>
         <h4>{{ event.title }}</h4>
+        <BaseButton @click="open">
+        <!-- <template v-slot:label="{ caption }">
+          {{ caption }}
+        </template> -->
+          <template v-slot:label>
+            VIEW DETAILS
+          </template>
+        </BaseButton>
       </div>
     </router-link>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core"
+import BaseButton from '@/components/BaseButton.vue';
 
 export default defineComponent({
+  components: {
+    BaseButton
+  },
   props: {
     event: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    open() {
+      console.log('DEMO CUSTOM BASE_BUTTON')
     }
   }
 })
