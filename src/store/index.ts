@@ -5,7 +5,16 @@ import { Event } from '@/shared/models/event.model';
 
 export default createStore({
   state: {
-    user: 'tomasysh',
+    user: { id: 'abc123', name: 'tomasysh' },
+    categories: [
+      'sustainability',
+      'nature',
+      'animal welfare',
+      'housing',
+      'education',
+      'food',
+      'community'
+    ],
     events: [],
     event: {}
   },
@@ -52,6 +61,17 @@ export default createStore({
             throw(error);
           });
       }
+    }
+  },
+  getters: {
+    categoriesLength: (state) => {
+      return state.categories.length;
+    },
+    petAllowedEvents: (state) => {
+      return state.events.filter((event: any) => event.petsAllowed);
+    },
+    getEventById: (state) => (id: number) => {
+      return state.events.find((event: Event) => event.id === id);
     }
   },
   modules: {}
