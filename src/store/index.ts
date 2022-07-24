@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 
 import EventService from '@/services/EventService';
+import { Event } from '@/shared/models/event.model';
 
 export default createStore({
   state: {
@@ -9,10 +10,10 @@ export default createStore({
     event: {}
   },
   mutations: {
-    ADD_EVENT(state: any, event) {
+    ADD_EVENT(state: any, event: Event) {
       state.events = [ ...state.events, event ];
     },
-    SET_EVENTS(state: any, events) {
+    SET_EVENTS(state: any, events: Event[]) {
       state.events = [ ...events ];
     },
     SET_EVENT(state: any, event) {
@@ -39,7 +40,7 @@ export default createStore({
         });
     },
     fetchEvent({ commit, state }, id) {
-      const existingEvent = state.events.find((event: any) => event.id === id);
+      const existingEvent: Event = state.events.find((event: any) => event.id === id);
       if (existingEvent) {
         commit('SET_EVENT', existingEvent)
       } else {

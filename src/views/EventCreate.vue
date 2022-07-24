@@ -62,12 +62,57 @@
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
-  data () {
-    return {
-      categories: [
+  // data () {
+  //   return {
+  //     categories: [
+  //       'sustainability',
+  //       'nature',
+  //       'animal welfare',
+  //       'housing',
+  //       'education',
+  //       'food',
+  //       'community'
+  //     ],
+  //     event: {
+  //       id: '',
+  //       category: '',
+  //       title: '',
+  //       description: '',
+  //       location: '',
+  //       date: '',
+  //       time: '',
+  //       organizer: ''
+  //     }
+  //   }
+  // },
+  // methods: {
+  //   onSubmit() {
+  //     const event = {
+  //       ...this.event,
+  //       id: uuidv4(),
+  //       organizer: this.$store.state.user
+  //     };
+  //     this.$store.dispatch('createEvent', event)
+  //       .then(() => {
+  //         this.$router.push({
+  //           name: 'EventDetails',
+  //           params: { id: event.id }
+  //         })
+  //       .catch((error) => {
+  //         this.$router.push({
+  //           name: 'ErrorDisplay',
+  //           params: { error: error }
+  //         });
+  //       })
+  //     })
+  //   }
+  // },
+
+  setup() {
+    const categories = [
         'sustainability',
         'nature',
         'animal welfare',
@@ -75,21 +120,20 @@ export default {
         'education',
         'food',
         'community'
-      ],
-      event: {
-        id: '',
-        category: '',
-        title: '',
+      ];
+    
+    const event = {
+        id         : '',
+        category   : '',
+        title      : '',
         description: '',
-        location: '',
-        date: '',
-        time: '',
-        organizer: ''
-      }
-    }
-  },
-  methods: {
-    onSubmit() {
+        location   : '',
+        date       : '',
+        time       : '',
+        organizer  : ''
+      };
+
+    function onSubmit() {
       const event = {
         ...this.event,
         id: uuidv4(),
@@ -108,6 +152,12 @@ export default {
           });
         })
       })
+    }
+
+    return {
+      categories,
+      event,
+      onSubmit
     }
   }
 }

@@ -4,9 +4,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core"
+import { defineComponent, PropType } from "@vue/runtime-core"
+import { Event } from "@/shared/models/event.model"
 
 export default defineComponent({
-  props: ['event'],
+  props: {
+    event: {
+      type: Object as PropType<Event>,
+      required: true
+    }
+  },
 })
 </script>
