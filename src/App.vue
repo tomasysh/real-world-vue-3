@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <div id="flashMessage" v-if="GStore.flashMessage">
+    <!-- <div id="flashMessage" v-if="GStore.flashMessage">
         {{ GStore.flashMessage }}
-    </div>    
+    </div>     -->
+    <NotificationContainer />
     <div id="nav">
       <router-link :to="{ name: 'EventList'}">Events</router-link> |
       <router-link :to="{ name: 'About' }">About</router-link> |
@@ -13,8 +14,13 @@
 </template>
 
 <script lang="ts">
+import NotificationContainer from '@/components/NotificationContainer.vue'
+
 export default {
-  inject: ['GStore'],
+  // inject: ['GStore'],
+  components: {
+    NotificationContainer
+  }
 }
 </script>
 

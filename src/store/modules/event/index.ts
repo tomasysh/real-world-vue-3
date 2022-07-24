@@ -25,26 +25,41 @@ export const mutations = {
 };
 
 export const actions = {
-    createEvent({ commit }: any, event: Event) {
-        EventService.postEvent(event)
-        .then(() => {
-        commit('ADD_EVENT', event);
-        })
-        .catch((error) => {
-        throw(error);
-        });
+    createEvent({ commit, dispatch }: any, event: Event) {
+        return EventService.postEvent(event)
+            .then(() => {
+                commit('ADD_EVENT', event);
+                const notification = {
+                    type: 'success',
+                    message: 'Your event has been created'
+                };
+                dispatch('notification/add', notification, { root: true });
+            })
+            .catch((error) => {
+                const notification = {
+                    type: 'error',
+                    message: 'There was a problem creating your event: ' + error.message
+                };
+                dispatch('notification/add', notification, { root: true });
+                throw error;
+            });
     },
-    fetchEvents({ commit }: any, { perPage, page }: { perPage: number, page: number }) {
+    fetchEvents({ commit, dispatch  }: any, { perPage, page }: { perPage: number, page: number }) {
         return EventService.getEvents(perPage, page)
             .then((response) => {
                 commit('SET_EVENTS_TOTAL', +response.headers['x-total-count']);
                 commit('SET_EVENTS', response.data);
             })
             .catch((error) => {
-                throw(error);
+                const notification = {
+                    type: 'error',
+                    message: 'There was a problem fetching events: ' + error.message
+                };
+                dispatch('notification/add', notification, { root: true });
+                throw error;
             });
     },
-    fetchEvent({ commit, state }: any, id: number) {
+    fetchEvent({ commit, state, dispatch }: any, id: number) {
         const existingEvent: Event = state.events.find((event: any) => event.id === id);
         if (existingEvent) {
         commit('SET_EVENT', existingEvent);
@@ -54,7 +69,12 @@ export const actions = {
             commit('SET_EVENT', response.data);
             })
             .catch((error) => {
-            throw(error);
+                const notification = {
+                    type: 'error',
+                    message: 'There was a problem fetching event: ' + error.message
+                };
+                dispatch('notification/add', notification, { root: true });
+                throw error;
             });
         }
     }

@@ -101,10 +101,10 @@ export default {
             params: { id: this.event.id }
           })
         .catch((error) => {
-          this.$router.push({
-            name: 'ErrorDisplay',
-            params: { error: error }
-          });
+          // this.$router.push({
+          //   name: 'ErrorDisplay',
+          //   params: { error: error }
+          // });
         })
       })
     }
