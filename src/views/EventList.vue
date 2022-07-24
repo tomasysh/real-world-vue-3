@@ -32,6 +32,7 @@
 // import { watchEffect } from 'vue';
 
 import { defineComponent } from '@vue/runtime-core';
+import { mapState } from 'vuex';
 
 import EventCard from '../components/EventCard.vue';
 
@@ -41,7 +42,10 @@ export default defineComponent({
     EventCard
   },
   created() {
-    this.$store.dispatch('fetchEvents')
+    this.$store.dispatch('fetchEvents', {
+      perPage: this.perPage,
+      page: this.page
+    })
       .catch((error) => {
         this.$router.push({
           name: 'ErrorDisplay',
@@ -50,9 +54,17 @@ export default defineComponent({
       });
   },
   computed: {
-    events() {
-      return this.$store.state.events;
-    }
+    perPage() {
+      return +this.$route.query.perPage || 3;
+    },
+    page() {
+      return +this.$route.query.page || 1;
+    },
+    hasNextPage() {
+      const totalPages = Math.ceil(this.eventsTotal / this.perPage);
+      return this.page < totalPages;
+    },
+    ...mapState(['events', 'eventsTotal'])
   }
  })
 </script>
