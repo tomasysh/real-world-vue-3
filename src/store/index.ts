@@ -25,7 +25,7 @@ export default createStore({
     SET_EVENTS(state: any, events: Event[]) {
       state.events = [ ...events ];
     },
-    SET_EVENT(state: any, event) {
+    SET_EVENT(state: any, event: Event) {
       state.event = { ...event }; 
     }
   },

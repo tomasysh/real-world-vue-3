@@ -73,17 +73,7 @@ import { v4 as uuidv4 } from 'uuid';
 export default {
   data () {
     return {
-      event: {
-        id: '',
-        category: '',
-        title: '',
-        description: '',
-        location: '',
-        date: '',
-        time: '',
-        petsAllowed: false,
-        organizer: '',
-      }
+      event: this.createFreshEvent(),
     }
   },
   computed: {
@@ -97,17 +87,24 @@ export default {
     ...mapState(['user', 'categories'])
   },
   methods: {
-    onSubmit() {
-      const event = {
-        ...this.event,
+    createFreshEvent() {
+      return {
         id: uuidv4(),
+        category: '',
+        title: '',
+        description: '',
+        location: '',
+        date: '',
+        time: '',
         organizer: this.$store.state.user.name
-      };
-      this.$store.dispatch('createEvent', event)
+      }
+    },
+    onSubmit() {
+      this.$store.dispatch('createEvent', this.event)
         .then(() => {
           this.$router.push({
             name: 'EventDetails',
-            params: { id: event.id }
+            params: { id: this.event.id }
           })
         .catch((error) => {
           this.$router.push({
